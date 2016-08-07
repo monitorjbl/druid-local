@@ -1,0 +1,49 @@
+{
+  "type": "kafka",
+  "dataSchema": {
+    "dataSource": "test-metrics",
+    "parser": {
+      "type": "string",
+      "parseSpec": {
+        "format": "json",
+        "timestampSpec": {
+          "column": "timestamp",
+          "format": "auto"
+        },
+        "dimensionsSpec": {
+          "dimensions": ["user","path","bytes"],
+          "dimensionExclusions": ["timestamp"]
+        }
+      }
+    },
+    "metricsSpec": [
+      {
+        "name": "count",
+        "type": "count"
+      },
+      {
+        "name": "bytesSum",
+        "fieldName": "bytes",
+        "type": "longSum"
+      }
+    ],
+    "granularitySpec": {
+      "type": "uniform",
+      "segmentGranularity": "HOUR",
+      "queryGranularity": "NONE"
+    }
+  },
+  "tuningConfig": {
+    "type": "kafka",
+    "maxRowsPerSegment": 5000000
+  },
+  "ioConfig": {
+    "topic": "metrics",
+    "consumerProperties": {
+      "bootstrap.servers": "localhost:9092"
+    },
+    "taskCount": 1,
+    "replicas": 1,
+    "taskDuration": "PT1H"
+  }
+}

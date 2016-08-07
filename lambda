@@ -1,0 +1,42 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SESSION=lambda-druid
+
+function start() {
+  rm $DIR/logs/*
+  tmux new-session -s $SESSION "tmux source-file $DIR/tmux.conf" 
+}
+
+function stop() {
+  tmux kill-session -t $SESSION
+}
+
+function attach() {
+  tmux attach -t $SESSION
+}
+
+function list() {
+  tmux list-sessions
+}
+
+case $1 in
+  start)
+  start
+  ;;
+  stop)
+  stop
+  ;;
+  attach)
+  attach
+  ;;
+  list)
+  list
+  ;;  
+  *)
+  echo "usage: lambda start|stop|attach|list"
+  exit 1
+  ;;
+esac
+
+exit 0
