@@ -9,5 +9,5 @@ java  -server -Xms128m -Xmx256m \
       -Dfile.encoding=UTF-8 \
       -Djava.io.tmpdir=$DIR/../var/tmp \
       -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager \
-      -cp 'conf/druid/_common:conf/druid/coordinator:lib/*' \
+      -cp "$DIR/../conf/druid/_common:$DIR/../conf/druid/coordinator:lib/*" \
       io.druid.cli.Main server coordinator | tee $DIR/../logs/druid-coordinator.log

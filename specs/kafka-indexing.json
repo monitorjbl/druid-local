@@ -11,7 +11,7 @@
           "format": "auto"
         },
         "dimensionsSpec": {
-          "dimensions": ["user","path","bytes"],
+          "dimensions": ["path","bytes"],
           "dimensionExclusions": ["timestamp"]
         }
       }
@@ -29,7 +29,7 @@
     ],
     "granularitySpec": {
       "type": "uniform",
-      "segmentGranularity": "HOUR",
+      "segmentGranularity": "MINUTE",
       "queryGranularity": "NONE"
     }
   },
@@ -44,6 +44,6 @@
     },
     "taskCount": 1,
     "replicas": 1,
-    "taskDuration": "PT1H"
+    "taskDuration": "PT5m"
   }
 }

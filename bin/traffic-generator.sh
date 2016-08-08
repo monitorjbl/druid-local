@@ -9,6 +9,7 @@ while [ true ]; do
   RND_PATH=${PATHS[$((RANDOM % 9))]}
   RND_USER=${USERS[$((RANDOM % 9))]}
   RND_SIZE=$((RANDOM % 4096))
-  echo "{\"timestamp\":\"$TIMESTAMP\",\"user\":\"$RND_USER\",\"path\":\"$RND_PATH\",\"bytes\":$RND_SIZE}"; 
+  RND_TIME=$((RANDOM % 1000))
+  echo "{\"timestamp\":\"$TIMESTAMP\",\"user\":\"$RND_USER\",\"path\":\"$RND_PATH\",\"bytes\":$RND_SIZE, \"duration\":$RND_TIME}"; 
   sleep 0.1
-done | tee $DIR/../test/requests.txt | /Tools/kafka_2.11-0.10.0.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic metrics
+done | tee -a $DIR/../test/requests.txt | /Tools/kafka_2.11-0.10.0.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic metrics

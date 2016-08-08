@@ -1,0 +1,63 @@
+{
+  "type" : "index",
+  "spec" : {
+    "dataSchema" : {
+      "dataSource": "test-metrics",
+      "parser": {
+        "type": "string",
+        "parseSpec": {
+          "format": "json",
+          "timestampSpec": {
+            "column": "timestamp",
+            "format": "auto"
+          },
+          "dimensionsSpec": {
+            "dimensions": ["user","path","bytes"],
+            "dimensionExclusions": ["timestamp"]
+          }
+        }
+      },
+      "metricsSpec": [
+        {
+          "name": "count",
+          "type": "count"
+        },
+        {
+          "name": "bytesSum",
+          "fieldName": "bytes",
+          "type": "longSum"
+        },
+        {
+          "name": "bytesMin",
+          "fieldName": "bytes",
+          "type": "longMin"
+        },
+        {
+          "name": "bytesMax",
+          "fieldName": "bytes",
+          "type": "longMax"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "MINUTE",
+        "queryGranularity": "NONE",
+        "intervals" : [ "2016-08-01T00:00:00.000Z/2016-08-07T23:20:00.000Z" ]
+      }
+    },
+    "ioConfig" : {
+      "type" : "index",
+      "firehose" : {
+        "type" : "local",
+        "baseDir" : "/Users/thundermoose/Projects/lambda-druid/test",
+        "filter" : "requests.txt"
+       }
+    },
+    "tuningConfig" : {
+      "type" : "index",
+      "targetPartitionSize" : -1,
+      "rowFlushBoundary" : 0,
+      "numShards": 1
+    }
+  }
+}

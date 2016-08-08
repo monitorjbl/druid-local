@@ -9,5 +9,5 @@ java  -server -Xms128m -Xmx1g \
       -Dfile.encoding=UTF-8 \
       -Djava.io.tmpdir=$DIR/../var/tmp \
       -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager \
-      -cp 'conf/druid/_common:conf/druid/historical:lib/*' \
+      -cp "$DIR/../conf/druid/_common:$DIR/../conf/druid/historical:lib/*" \
       io.druid.cli.Main server historical | tee $DIR/../logs/druid-historical.log
